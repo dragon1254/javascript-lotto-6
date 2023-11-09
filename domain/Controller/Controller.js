@@ -1,8 +1,8 @@
 import { Console, Random } from "@woowacourse/mission-utils";
-import { MESSAGE } from "../src/const/message";
-import { ERROR } from "../src/const/error";
-import Lotto from "./Lotto";
-import checkBonus from "./Bonus";
+import { MESSAGE } from "../../src/const/message";
+import { ERROR } from "../../src/const/error";
+import Lotto from "../Lotto";
+import checkBonus from "../Bonus";
 
 
 class Controller {
