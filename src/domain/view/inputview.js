@@ -7,6 +7,14 @@ const inputView = {
         const buyPrice = await MissionUtils.Console.readLineAsync(message.price);
         return buyPrice;
     },
+    async getWinning(){
+        const winningNumber = await MissionUtils.Console.readLineAsync(message.winning);
+        return winningNumber;
+    },
+    async getBounus(){
+        const bonusNumber = await MissionUtils.Console.readLineAsync(message.bonus);
+        return bonusNumber;
+    }
 }
 
 export default inputView;

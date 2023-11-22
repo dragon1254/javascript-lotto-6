@@ -1,3 +1,5 @@
+import error from "../constant/error";
+
 class Lotto {
   #numbers;
 
@@ -8,11 +10,27 @@ class Lotto {
 
   #validate(numbers) {
     if (numbers.length !== 6) {
-      throw new Error("[ERROR] 로또 번호는 6개여야 합니다.");
+      throw new Error(error.winningSix);
     }
+    const duplication = new Set(numbers);
+    if (numbers.length !== duplication.size){
+      throw new Error(error.duplication);
+    }
+    numbers.forEach(element => {
+      if (isNaN(element)) {
+        throw new Error(error.string);
+      }
+      if (!Number.isInteger(element)) {
+        throw new Error(error.range);
+      }
+      if (element < 1) {
+        throw new Error(error.range);
+      }
+      if (element > 45) {
+        throw new Error(error.range);
+      }
+    });
   }
-
-  // TODO: 추가 기능 구현
 }
 
 export default Lotto;
