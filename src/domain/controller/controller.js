@@ -15,9 +15,7 @@ class controller{
 #winningNumber
 
 #bonusNumber
-    constructor(){
 
-    }
     async run(){
         await this.priceAndLottos();
         await this.getWinningBonusNumber();
