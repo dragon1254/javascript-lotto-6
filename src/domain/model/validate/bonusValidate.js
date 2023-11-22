@@ -1,4 +1,5 @@
 import error from "../constant/error";
+import number from "../constant/number";
 
 class bonusValidate{
     checkBonus(bonus, getWinningNumber){
@@ -8,14 +9,14 @@ class bonusValidate{
         if (!Number.isInteger(bonus)) {
             throw new Error(error.integer);
         }
-        if (bonus < 1) {
+        if (bonus < number.minLotto) {
             throw new Error(error.range);
         }
-        if (bonus > 45) {
+        if (bonus > number.maxLotto) {
             throw new Error(error.range);
         }
         const checkDuplication = new Set([...getWinningNumber,bonus])
-        if (checkDuplication.size !== 7 ){
+        if (checkDuplication.size !== number.bonusAndWinningLength ){
             throw new Error(error.bonusDuplication);
         }
     }

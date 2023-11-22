@@ -1,4 +1,5 @@
 import error from "../constant/error";
+import number from "../constant/number";
 
 class validatePrice{
     buyPrice(priceNumber){
@@ -8,10 +9,10 @@ class validatePrice{
         if(!Number.isInteger(priceNumber)){
             throw new Error(error.integer);
         }
-        if(priceNumber % 1000 !== 0){
+        if(priceNumber % number.oneLottoPrice !== 0){
             throw new Error(error.thousand);
         }
-        if(priceNumber < 1000){
+        if(priceNumber < number.oneLottoPrice){
             throw new Error(error.lowPrice);
         }
     }

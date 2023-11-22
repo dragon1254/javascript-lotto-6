@@ -1,4 +1,5 @@
 import error from "../constant/error";
+import number from "../constant/number";
 
 class Lotto {
   #numbers;
@@ -23,10 +24,10 @@ class Lotto {
       if (!Number.isInteger(element)) {
         throw new Error(error.range);
       }
-      if (element < 1) {
+      if (element < number.minLotto) {
         throw new Error(error.range);
       }
-      if (element > 45) {
+      if (element > number.maxLotto) {
         throw new Error(error.range);
       }
     });
