@@ -59,6 +59,8 @@ class controller{
     }
     printResult(winCountNumber, getRate){
         outputView.printResultIntroduce();
+        outputView.printWinning(winCountNumber);
+        outputView.printRate(getRate);
     }
 }
 

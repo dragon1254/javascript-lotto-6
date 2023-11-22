@@ -21,7 +21,11 @@ const outputView = {
         MissionUtils.Console.print(`5개 일치, 보너스 볼 일치 (30,000,000원) - ${winCountNumberArray[3]}개`)
         MissionUtils.Console.print(`6개 일치 (2,000,000,000원) - ${winCountNumberArray[4]}개`)
     },
-    printRate(){}
+    printRate(getRate){
+        const percentRate = getRate * 100;
+        const percentRateToFixed = percentRate.toFixed(1);
+        MissionUtils.Console.print(`총 수익률은 ${percentRateToFixed}%입니다.`);
+    }
 }
 
 export default outputView;
