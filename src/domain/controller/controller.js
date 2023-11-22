@@ -1,7 +1,8 @@
 import number from "../model/constant/number";
+import calculateRate from "../model/utils/calculateRate";
+import calculateWin from "../model/utils/calculateWin";
 import makeLotto from "../model/utils/makeLotto";
 import makeNumbers from "../model/utils/makeNumbers";
-import Lotto from "../model/validate/Lotto";
 import validatePrice from "../model/validate/priceValidate";
 import inputView from "../view/inputview";
 import outputView from "../view/outputview";
@@ -20,6 +21,7 @@ class controller{
     async run(){
         await this.priceAndLottos();
         await this.getWinningBonusNumber();
+        this.calculateWinCount();
     }
     async priceAndLottos(){
         try{
@@ -48,8 +50,16 @@ class controller{
         const getBonusNumber = await makeWinningAndBonus.bonusNumber(getWinningNumber);
         this.#bonusNumber = getBonusNumber;
     }
-
-
+    calculateWinCount(){
+        const winCalculator = new calculateWin(this.#myLottos,this.#winningNumber,this.#bonusNumber);
+        const winCountNumber = winCalculator.winCount();
+        const rateCalculator = new calculateRate(this.#price)
+        const getRate = rateCalculator.makeRate(winCountNumber)
+        this.printResult(winCountNumber, getRate)
+    }
+    printResult(winCountNumber, getRate){
+        outputView.printResultIntroduce();
+    }
 }
 
 export default controller;
