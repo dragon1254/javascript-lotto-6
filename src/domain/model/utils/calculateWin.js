@@ -13,12 +13,12 @@ key가 3, 4, 5, 보너스, 6 의 객체로 만듦*/
         this.myLotto.forEach(element => {
             let duplication = element.filter(it => this.winningNumber.includes(it))
             let count = duplication.length;
-            this.caseCheck(count,winObject);
+            this.caseCheck(element,count,winObject);
         });
         return winObject;
     }
     // depth가 너무 깊어져서 switch case만 담당하는 메서드 따로 만듦
-    caseCheck(count,winObject){
+    caseCheck(element,count,winObject){
         switch (count) {
             case 3 : winObject['three']++
             break;
