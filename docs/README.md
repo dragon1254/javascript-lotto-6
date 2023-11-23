@@ -86,3 +86,5 @@
 - 처리가 복잡해져 컨트롤러의 첫 메서드에서 로또 발행까지 담당하게 함. 세부 기능은 나눠둠
 
 - 기능 하나에 메서드 하나씩 배당하려 함 : 그런데 계산 쪽에 depth가 너무 깊어져서 switch case만 따로 메서드 배당. if 대신 switch씀. 그런데 bonus를 처리 못해서 안에 if로 보너스 씀
+
+- npx jest --coverage 써서 test구현 하려 함. 그런데 coverage쓰면 package.json을 건드려 버리기 때문에 push - coverage Test - 삭제 - 다시 클론 식으로 push하지 않고 커버리지만 확인함
