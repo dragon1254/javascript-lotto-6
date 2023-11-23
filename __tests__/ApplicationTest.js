@@ -43,12 +43,12 @@ const runException = async (input) => {
   expect(logSpy).toHaveBeenCalledWith(expect.stringContaining("[ERROR]"));
 }
 
-describe("로또 테스트", () => {
+describe("로또 기능 테스트", () => {
   beforeEach(() => {
     jest.restoreAllMocks();
   })
 
-  test("기능 테스트", async () => {
+  test("3개 일치 여부시 잘 출력 되는지", async () => {
     // given
     const logSpy = getLogSpy();
 
@@ -92,8 +92,65 @@ describe("로또 테스트", () => {
     });
   });
 
-  test("예외 테스트", async () => {
+  test("4개 일치 여부시 잘 출력 되는지", async () => {
+    // given
+    const logSpy = getLogSpy();
+
+    mockRandoms([
+      [15, 17, 32, 39, 43, 44],
+      [7, 11, 16, 35, 36, 44],
+      [8, 11, 13, 19, 30, 31],
+      [13, 14, 16, 38, 42, 45],
+      [7, 11, 30, 40, 42, 43],
+      [2, 13, 22, 32, 38, 45],
+      [3, 10, 19, 24, 32, 34]]);
+    mockQuestions(["7000", "8, 11, 13, 33, 43, 44", "45"]);
+
+    // when
+    const app = new App();
+    await app.play();
+
+    // then
+    const logs = [
+      "7개를 구매했습니다.",
+      "[15, 17, 32, 39, 43, 44]",
+      "[7, 11, 16, 35, 36, 44]",
+      "[8, 11, 13, 19, 30, 31]",
+      "[13, 14, 16, 38, 42, 45]",
+      "[7, 11, 30, 40, 42, 43]",
+      "[2, 13, 22, 32, 38, 45]",
+      "[3, 10, 19, 24, 32, 34]",
+      "3개 일치 (5,000원) - 0개",
+      "4개 일치 (50,000원) - 1개",
+      "5개 일치 (1,500,000원) - 0개",
+      "5개 일치, 보너스 볼 일치 (30,000,000원) - 0개",
+      "6개 일치 (2,000,000,000원) - 0개",
+      "총 수익률은 714.3%입니다.",
+    ];
+
+    logs.forEach((log) => {
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(log));
+    });
+  });
+});
+
+
+
+describe("예외 테스트", () => {
+  test("사는 금액에 문자있을 때 [ERROR] 출력", async () => {
     await runException("1000j");
+  });
+  
+  test("사는 금액이 정수가 아닐때 [ERROR] 출력", async () => {
+    await runException("1000.5");
+  });
+
+  test("사는 금액이 1000원 단위가 아닐 때 [ERROR] 출력", async () => {
+    await runException("2500");
+  });
+
+  test("사는 금액이 1000원 이하일 때 [ERROR] 출력", async () => {
+    await runException("500");
   });
 });
 

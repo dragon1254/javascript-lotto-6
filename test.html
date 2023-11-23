@@ -23,20 +23,27 @@
             console.log(c)
         }
 
-        function lottos(countNumber,winningNumbers,bonusNumber){
+        function lottos(winningNumbers,bonusNumber){
 
             let arrayLottos = []
-            for(let i = 0; i < countNumber; i++){
-                let oneLotto = []
-                for(let i = 0; i< 6; i++) {
-                    const everyLottoNumber = Math.floor(Math.random()*45);
-                    oneLotto.push(everyLottoNumber);
-                }
-                console.log(oneLotto);
-                oneLotto.sort(function (a,b){
-                    return a-b;
-                })
-                arrayLottos.push(oneLotto);
+            for(let i = 0; i < 7; i++){
+                let oneLotto = [
+    [15, 17, 32, 39, 43, 44],
+    [7, 11, 16, 35, 36, 44],
+    [8, 11, 13, 19, 30, 31],
+    [13, 14, 16, 38, 42, 45],
+    [7, 11, 30, 40, 42, 43],
+    [2, 13, 22, 32, 38, 45],
+    [3, 10, 19, 24, 32, 34]
+]
+
+
+                // for(let i = 0; i< 6; i++) {
+                //     const everyLottoNumber = Math.floor(Math.random()*45);
+                //     oneLotto.push(everyLottoNumber);
+                // }
+                console.log(oneLotto[i]);
+                arrayLottos.push(oneLotto[i]);
             }
 
             let winObject = {'three' : 0, 'four': 0, 'five': 0,'bonus': 0,'six': 0};
@@ -64,7 +71,7 @@
             let benefit = 0
             benefit = benefit + 5000 * winCountNumberArray[0]+ 50000*winCountNumberArray[1]+ 1500000*winCountNumberArray[2]+ 30000000*winCountNumberArray[3]+ 2000000000*winCountNumberArray[4];
             console.log(benefit)
-            const tempRate = benefit / countNumber
+            const tempRate = benefit / 7
             const rate = tempRate / 10
             console.log(`3개 일치 (5,000원) - ${winCountNumberArray[0]}개`)
             console.log(`4개 일치 (50,000원) - ${winCountNumberArray[1]}개`)
