@@ -25,9 +25,9 @@ key가 3, 4, 5, 보너스, 6 의 객체로 만듦*/
             case 4 : winObject['four']++
             break;
             case 5 : 
-            if(element.include(this.bonusNumber)){
+            if(element.includes(this.bonusNumber)){
                 winObject['bonus']++
-            } else if(!element.include(this.bonusNumber)){
+            } else if(!element.includes(this.bonusNumber)){
                 winObject['five']++
             }
             break;
