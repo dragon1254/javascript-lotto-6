@@ -22,6 +22,57 @@
             let c = arrA.filter(it => arrB.includes(it))
             console.log(c)
         }
+
+        function lottos(countNumber,winningNumbers,bonusNumber){
+
+            let arrayLottos = []
+            for(let i = 0; i < countNumber; i++){
+                let oneLotto = []
+                for(let i = 0; i< 6; i++) {
+                    const everyLottoNumber = Math.floor(Math.random()*45);
+                    oneLotto.push(everyLottoNumber);
+                }
+                console.log(oneLotto);
+                oneLotto.sort(function (a,b){
+                    return a-b;
+                })
+                arrayLottos.push(oneLotto);
+            }
+
+            let winObject = {'three' : 0, 'four': 0, 'five': 0,'bonus': 0,'six': 0};
+            arrayLottos.forEach(element => {
+                let duplication = element.filter(it => winningNumbers.includes(it))
+                let count = duplication.length;
+                switch (count) {
+                case 3 : winObject['three']++
+                break;
+                case 4 : winObject['four']++
+                break;
+                case 5 : 
+                if(element.includes(bonusNumber)){
+                    winObject['bonus']++
+                } else if(!element.includes(bonusNumber)){
+                    winObject['five']++
+                }
+                break;
+                case 6 : winObject['six']++
+                break;
+                }
+            
+        });
+            const winCountNumberArray = Object.values(winObject);
+            let benefit = 0
+            benefit = benefit + 5000 * winCountNumberArray[0]+ 50000*winCountNumberArray[1]+ 1500000*winCountNumberArray[2]+ 30000000*winCountNumberArray[3]+ 2000000000*winCountNumberArray[4];
+            console.log(benefit)
+            const tempRate = benefit / countNumber
+            const rate = tempRate / 10
+            console.log(`3개 일치 (5,000원) - ${winCountNumberArray[0]}개`)
+            console.log(`4개 일치 (50,000원) - ${winCountNumberArray[1]}개`)
+            console.log(`5개 일치 (1,500,000원) - ${winCountNumberArray[2]}개`)
+            console.log(`5개 일치, 보너스 볼 일치 (30,000,000원) - ${winCountNumberArray[3]}개`)
+            console.log(`6개 일치 (2,000,000,000원) - ${winCountNumberArray[4]}개`)
+            console.log(`총 수익률은 ${rate.toFixed(1)}%입니다.`)
+        }
     </script>
 </body>
 </html>
