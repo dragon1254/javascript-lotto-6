@@ -6,7 +6,129 @@
     <title>Document</title>
 </head>
 <body>
+    <div>
+        <h4>당첨번호를 입력하세요</h4>
+        <h4>1,2,3,4,5,6의 형태로 입력해야 합니다</h4>
+        <input id="win" placeholder="6개의 숫자 입력">
+        <button id="win-input">입력</button>
+        <h4>보너스번호를 입력하세요</h4>
+        <h4>숫자 1개를 입력해야 합니다</h4>
+        <input id="bonus" placeholder="숫자 입력">
+        <button id="bonus-input">입력</button>
+    </div>
+    <div>
+        <h4>가격을 입력하세요</h4>
+        <input id="price-input" placeholder="1000단위 입니다" type="number" step="1000">
+        <button id="confirm">확인</button>
+    </div>
+    <div id="win-number">당첨번호</div>
+    <div id="bonus-number">보너스번호</div>
+    <div>로또내역</div>
+    <div id="lottos">로또 번호</div>
+    <div id="winning">당첨내역</div>
     <script>
+        
+        document.getElementById("win-input").addEventListener('click',function(){
+            let winningNumbers = document.getElementById("win").value
+            let numbers = winningNumbers.split(',').map(Number);
+            winValidate(numbers)
+            let doc = document.getElementById("win-number")
+            doc.innerHTML = `당첨번호 : ${numbers}`
+        })
+
+        document.getElementById("bonus-input").addEventListener('click',function(){
+            let winningNumbers = document.getElementById("win").value;
+            let bonusNumber = document.getElementById("bonus").value;
+            checkBonus(bonusNumber,winningNumbers)
+            document.getElementById("bonus-number").innerHTML=`보너스번호 : ${bonusNumber}`
+        })
+
+        document.getElementById("confirm").addEventListener("click", function(){
+            let getWinningNumbers = document.getElementById("win").value;
+            let getBonusNumber = document.getElementById("bonus").value;
+            let price = document.getElementById("price-input").value;
+            let winningNumbers = getWinningNumbers.split(',').map(Number);
+            let bonusNumber = Number(getBonusNumber);
+
+            check(price);
+            document.getElementById("lottos").innerHTML='';
+            makeLottos(winningNumbers,bonusNumber,price);
+        })
+
+        function check(price){
+            let priceThousand = price % 1000
+            if(priceThousand !== 0){
+                alert('1000단위로 입력하세요')
+            }
+        }
+        
+
+function winValidate(numbers) {
+        console.log(numbers)
+        if (numbers.length !== 6) {
+            alert(error.winningSix);
+        }
+
+    const duplication = new Set(numbers);
+        if (numbers.length !== duplication.size){
+            alert(error.duplication);
+        }
+    numbers.forEach(element => {
+      if (isNaN(element)) {
+        alert(error.string);
+      }
+      if (!Number.isInteger(element)) {
+        alert(error.range);
+      }
+      if (element < number.minLotto) {
+        alert(error.range);
+      }
+      if (element > number.maxLotto) {
+        alert(error.range);
+      }
+     });
+}
+
+function checkBonus(bonusNumber, winningNumbers){
+    let bonus = Number(bonusNumber);
+    let getWinningNumber = winningNumbers.split(',').map(Number);
+        if (isNaN(bonus)) {
+            alert(error.string);
+        }
+        if (!Number.isInteger(bonus)) {
+            alert(error.integer);
+        }
+        if (bonus < number.minLotto) {
+            alert(error.range);
+        }
+        if (bonus > number.maxLotto) {
+            alert(error.range);
+        }
+        const checkDuplication = new Set([...getWinningNumber,bonus])
+        if (checkDuplication.size !== number.bonusAndWinningLength ){
+            alert(error.bonusDuplication);
+        }
+    }
+const error = {
+    string : '[ERROR] 숫자를 입력해야 합니다.',
+    integer : '[ERROR] 정수를 입력해야 합니다.',
+    thousand : '[ERROR] 1000의 배수로 입력해야 합니다.',
+    lowPrice : '[ERROR] 1000이상의 수를 입력해야 합니다.',
+    winningSix : '[ERROR] 로또 번호는 6개여야 합니다.',
+    duplication : '[ERROR] 로또에 중복은 없습니다.',
+    range : '[ERROR] 로또 번호는 1부터 45까지의 정수입니다',
+    bonusDuplication : '[ERROR] 보너스 번호와 당첨번호는 겹치지 않습니다'
+}
+
+const number = {
+    oneLottoPrice : 1000,
+    minLotto : 1,
+    maxLotto : 45,
+    lottoLength : 6,
+    bonusAndWinningLength : 7,
+    winPrize : [5000, 50000, 1500000, 30000000, 2000000000]
+}
+
         function set(a){
             // const b = a.split(',').map(Number);
             // console.log(b)
@@ -25,61 +147,121 @@
 
         function lottos(winningNumbers,bonusNumber){
 
-            let arrayLottos = []
-            for(let i = 0; i < 7; i++){
-                let oneLotto = [
-    [15, 17, 32, 39, 43, 44],
-    [7, 11, 16, 35, 36, 44],
-    [8, 11, 13, 19, 30, 31],
-    [13, 14, 16, 38, 42, 45],
-    [7, 11, 30, 40, 42, 43],
-    [2, 13, 22, 32, 38, 45],
-    [3, 10, 19, 24, 32, 34]
+let arrayLottos = []
+for(let i = 0; i < 7; i++){
+    let oneLotto = [
+[15, 17, 32, 39, 43, 44],
+[7, 11, 16, 35, 36, 44],
+[8, 11, 13, 19, 30, 31],
+[13, 14, 16, 38, 42, 45],
+[7, 11, 30, 40, 42, 43],
+[2, 13, 22, 32, 38, 45],
+[3, 10, 19, 24, 32, 34]
 ]
 
 
-                // for(let i = 0; i< 6; i++) {
-                //     const everyLottoNumber = Math.floor(Math.random()*45);
-                //     oneLotto.push(everyLottoNumber);
-                // }
-                console.log(oneLotto[i]);
-                arrayLottos.push(oneLotto[i]);
-            }
+    // for(let i = 0; i< 6; i++) {
+    //     const everyLottoNumber = Math.floor(Math.random()*45);
+    //     oneLotto.push(everyLottoNumber);
+    // }
+    console.log(oneLotto[i]);
+    arrayLottos.push(oneLotto[i]);
+}
 
-            let winObject = {'three' : 0, 'four': 0, 'five': 0,'bonus': 0,'six': 0};
-            arrayLottos.forEach(element => {
-                let duplication = element.filter(it => winningNumbers.includes(it))
-                let count = duplication.length;
-                switch (count) {
-                case 3 : winObject['three']++
-                break;
-                case 4 : winObject['four']++
-                break;
-                case 5 : 
-                if(element.includes(bonusNumber)){
-                    winObject['bonus']++
-                } else if(!element.includes(bonusNumber)){
-                    winObject['five']++
-                }
-                break;
-                case 6 : winObject['six']++
-                break;
-                }
-            
-        });
-            const winCountNumberArray = Object.values(winObject);
-            let benefit = 0
-            benefit = benefit + 5000 * winCountNumberArray[0]+ 50000*winCountNumberArray[1]+ 1500000*winCountNumberArray[2]+ 30000000*winCountNumberArray[3]+ 2000000000*winCountNumberArray[4];
-            console.log(benefit)
-            const tempRate = benefit / 7
-            const rate = tempRate / 10
-            console.log(`3개 일치 (5,000원) - ${winCountNumberArray[0]}개`)
-            console.log(`4개 일치 (50,000원) - ${winCountNumberArray[1]}개`)
-            console.log(`5개 일치 (1,500,000원) - ${winCountNumberArray[2]}개`)
-            console.log(`5개 일치, 보너스 볼 일치 (30,000,000원) - ${winCountNumberArray[3]}개`)
-            console.log(`6개 일치 (2,000,000,000원) - ${winCountNumberArray[4]}개`)
-            console.log(`총 수익률은 ${rate.toFixed(1)}%입니다.`)
-        }
+let winObject = {'three' : 0, 'four': 0, 'five': 0,'bonus': 0,'six': 0};
+arrayLottos.forEach(element => {
+    let duplication = element.filter(it => winningNumbers.includes(it))
+    let count = duplication.length;
+    switch (count) {
+    case 3 : winObject['three']++
+    break;
+    case 4 : winObject['four']++
+    break;
+    case 5 : 
+    if(element.includes(bonusNumber)){
+        winObject['bonus']++
+    } else if(!element.includes(bonusNumber)){
+        winObject['five']++
+    }
+    break;
+    case 6 : winObject['six']++
+    break;
+    }
+
+});
+const winCountNumberArray = Object.values(winObject);
+let benefit = 0
+benefit = benefit + 5000 * winCountNumberArray[0]+ 50000*winCountNumberArray[1]+ 1500000*winCountNumberArray[2]+ 30000000*winCountNumberArray[3]+ 2000000000*winCountNumberArray[4];
+console.log(benefit)
+const tempRate = benefit / 7
+const rate = tempRate / 10
+console.log(`3개 일치 (5,000원) - ${winCountNumberArray[0]}개`)
+console.log(`4개 일치 (50,000원) - ${winCountNumberArray[1]}개`)
+console.log(`5개 일치 (1,500,000원) - ${winCountNumberArray[2]}개`)
+console.log(`5개 일치, 보너스 볼 일치 (30,000,000원) - ${winCountNumberArray[3]}개`)
+console.log(`6개 일치 (2,000,000,000원) - ${winCountNumberArray[4]}개`)
+console.log(`총 수익률은 ${rate.toFixed(1)}%입니다.`)
+}
+
+function makeLottos(winningNumbers,bonusNumber,price){
+    document.getElementById("lottos").innerHTML = '';
+    document.getElementById("winning").innerHTML = '';
+    
+    let arrayLottos = [];
+for(let j = 0; j < price/1000; j++){
+    let oneLotto = [];
+    for(let i = 0; i< 6; i++) {
+        const everyLottoNumber = Math.floor(Math.random()*45)+1;
+        oneLotto.push(everyLottoNumber);
+    }
+    arrayLottos.push(oneLotto)
+    console.log(oneLotto)
+    document.getElementById("lottos").insertAdjacentHTML('beforeend',`[${arrayLottos[j]}]`)
+}
+console.log(arrayLottos)
+// }
+
+let winObject = {'three' : 0, 'four': 0, 'five': 0,'bonus': 0,'six': 0};
+arrayLottos.forEach(element => {
+    let duplication = element.filter(it => winningNumbers.includes(it))
+    let count = duplication.length;
+    switch (count) {
+    case 3 : winObject['three']++
+    break;
+    case 4 : winObject['four']++
+    break;
+    case 5 : 
+    if(element.includes(bonusNumber)){
+        winObject['bonus']++
+    } else if(!element.includes(bonusNumber)){
+        winObject['five']++
+    }
+    break;
+    case 6 : winObject['six']++
+    break;
+    }
+
+});
+const winCountNumberArray = Object.values(winObject);
+let benefit = 0
+benefit = benefit + 5000 * winCountNumberArray[0]+ 50000*winCountNumberArray[1]+ 1500000*winCountNumberArray[2]+ 30000000*winCountNumberArray[3]+ 2000000000*winCountNumberArray[4];
+console.log(benefit)
+const tempRate = benefit / price
+const rate = tempRate * 100
+console.log(`3개 일치 (5,000원) - ${winCountNumberArray[0]}개`)
+console.log(`4개 일치 (50,000원) - ${winCountNumberArray[1]}개`)
+console.log(`5개 일치 (1,500,000원) - ${winCountNumberArray[2]}개`)
+console.log(`5개 일치, 보너스 볼 일치 (30,000,000원) - ${winCountNumberArray[3]}개`)
+console.log(`6개 일치 (2,000,000,000원) - ${winCountNumberArray[4]}개`)
+console.log(`총 수익률은 ${rate.toFixed(1)}%입니다.`)
+
+document.getElementById("winning").insertAdjacentHTML('beforeend',`3개 일치 (5,000원) - ${winCountNumberArray[0]}개\r`)
+document.getElementById("winning").insertAdjacentHTML('beforeend',`4개 일치 (50,000원) - ${winCountNumberArray[1]}개`)
+document.getElementById("winning").insertAdjacentHTML('beforeend',`5개 일치 (1,500,000원) - ${winCountNumberArray[2]}개`)
+document.getElementById("winning").insertAdjacentHTML('beforeend',`5개 일치, 보너스 볼 일치 (30,000,000원) - ${winCountNumberArray[3]}개`)
+document.getElementById("winning").insertAdjacentHTML('beforeend',`6개 일치 (2,000,000,000원) - ${winCountNumberArray[4]}개`)
+document.getElementById("winning").insertAdjacentHTML('beforeend',`총 수익률은 ${rate.toFixed(1)}%입니다.`)
+}
     </script>
 </body>
 </html>
